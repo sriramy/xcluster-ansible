@@ -14,6 +14,9 @@ source "${XCLUSTER_ANSIBLE_PATH}/lib/xcluster.sh"
 parse_cmdline_opts $*
 source_env
 
+# start test
 export PATH="${PATH}:$(ovl_path ${OVL})"
 cd "$(ovl_path ${OVL})"
-redirect_cmd ${OVL}.sh test
+exec_ns "${XCLUSTER_NETNS}" "${OVL}.sh test ${TESTCASE}"
+
+log_elapsed_time

@@ -1,2 +1,2 @@
-# xcluster-ansible
-Ansible scripts to bootstrap a xcluster environment
+# xcluster-builder
+Build scripts to bootstrap a xcluster environment

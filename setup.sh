@@ -22,6 +22,3 @@ start_services || true
 # setup network
 add_ns "${XCLUSTER_NETNS}"
 log_elapsed_time
-
-# start test
-exec_ns "${XCLUSTER_NETNS}" "${XCLUSTER_ANSIBLE_PATH}/run.sh $*"

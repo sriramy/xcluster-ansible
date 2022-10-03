@@ -1,26 +1,28 @@
 #!/bin/bash
 
-source_env() {
-    cd "${XCLUSTER_PATH}"
+function source_env() {
+    redirect_cmd pushd .
+    redirect_cmd cd "${XCLUSTER_PATH}"
     if [[ "$K8S" == "true" ]]; then
         log "Source xcluster Envsettings.k8s"
-        source "${XCLUSTER_PATH}/Envsettings.k8s"
+        redirect_cmd source "${XCLUSTER_PATH}/Envsettings.k8s"
     else
         log "Source xcluster Envsettings"
-        source "${XCLUSTER_PATH}/Envsettings"
+        redirect_cmd source "${XCLUSTER_PATH}/Envsettings"
     fi
+    redirect_cmd popd
 }
 
-__check_ns() {
+function __check_ns() {
     local __ns_prefix="1"
     if [ $# -ge 1 ] && [ -n "$1" ]; then
         __ns_prefix=$1
     fi
     local __netns=${USER}_xcluster$__ns_prefix
-    ip netns | grep -qe "^$__netns "
+    redirect_cmd ip netns | grep -qe "^$__netns "
 }
 
-add_ns() {
+function add_ns() {
     local __ns_prefix="1"
     if [ $# -ge 1 ] && [ -n "$1" ]; then
         __ns_prefix=$1
@@ -31,11 +33,11 @@ add_ns() {
     else
         log "Add netns $__ns_prefix"
         source_env
-        ${XCLUSTER} nsadd $__ns_prefix || true
+        redirect_cmd ${XCLUSTER} nsadd $__ns_prefix || true
     fi
 }
 
-rem_ns() {
+function rem_ns() {
     local __ns_prefix="1"
     if [ $# -ge 1 ] && [ -n "$1" ]; then
         __ns_prefix=$1
@@ -44,13 +46,13 @@ rem_ns() {
     if __check_ns $__ns_prefix; then
         log "Remove netns $__ns_prefix"
         source_env
-        ${XCLUSTER} nsdel $__ns_prefix
+        redirect_cmd ${XCLUSTER} nsdel $__ns_prefix
     else
         log "Netns $__ns_prefix doesn't exist"
     fi
 }
 
-exec_ns() {
+function exec_ns() {
     local __netns=${USER}_xcluster$1
     local __cmd=$2
     log "Run $__cmd in $__netns"
