@@ -16,6 +16,8 @@ source "${XCLUSTER_ANSIBLE_PATH}/lib/xcluster.sh"
 # setup environment
 ###############################################################################
 parse_cmdline_opts $*
+log_environment
+log_execution_start
 bootstrap
 install_distro_packages
 install_ansible
@@ -28,11 +30,16 @@ if ${XCLUSTER_CLEAN}; then
     rem_ns "${XCLUSTER_NETNS}"
 fi
 add_ns "${XCLUSTER_NETNS}"
-log_elapsed_time
+log_execution_stop
+
+###############################################################################
+# Build kernel if needed
+###############################################################################
+exec_ns "${XCLUSTER_NETNS}" ${XCLUSTER_ANSIBLE_PATH}/kernel.sh $*
 
 ###############################################################################
 # start test if $OVL is given
 ###############################################################################
 if [[ ! -z ${OVL} ]]; then
-    exec_ns "${XCLUSTER_NETNS}" "${XCLUSTER_ANSIBLE_PATH}/run.sh $*"
+    exec_ns "${XCLUSTER_NETNS}" ${XCLUSTER_ANSIBLE_PATH}/run.sh $*
 fi

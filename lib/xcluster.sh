@@ -56,7 +56,7 @@ function exec_ns() {
     local __netns=${USER}_xcluster$1
     local __cmd=$2
     log "Run $__cmd in $__netns"
-    ip netns exec $__netns $__cmd
+    ip netns exec $__netns "$__cmd"
 }
 
 function ovl_path() {

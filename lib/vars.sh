@@ -8,7 +8,7 @@ export VENV_PATH="/tmp/${USER}/xcluster/.venv"
 export ARCHIVE="${HOME}/xc/archive"
 export XCLUSTER_WORKSPACE="${HOME}/xc/workspace"
 export XCLUSTER_PATH="${HOME}/xc/xcluster"
-export K8S="true"
+# export K8S="true"
 
 # kernel specific variables
 export KERNELDIR="${HOME}/xc/linux"

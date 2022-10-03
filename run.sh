@@ -12,6 +12,7 @@ source "${XCLUSTER_ANSIBLE_PATH}/lib/opts.sh"
 source "${XCLUSTER_ANSIBLE_PATH}/lib/xcluster.sh"
 
 parse_cmdline_opts $*
+log_execution_start
 source_env
 
 # start test
@@ -19,4 +20,4 @@ export PATH="${PATH}:$(ovl_path ${OVL})"
 cd "$(ovl_path ${OVL})"
 ${OVL}.sh test ${TESTCASE}
 
-log_elapsed_time
+log_execution_stop
