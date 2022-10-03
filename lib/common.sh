@@ -1,6 +1,6 @@
 #!/bin/bash
 
-redirect_cmd() {
+function redirect_cmd() {
   if [[ "$VERBOSE" == "false" ]]; then
     "$@" > /dev/null 2>&1
   else
@@ -8,7 +8,7 @@ redirect_cmd() {
   fi
 }
 
-log() {
+function log() {
     __level="INFO"
     __msg="$1"
 
@@ -20,11 +20,11 @@ log() {
     echo "$__level:  $__msg"
 }
 
-bootstrap() {
+function bootstrap() {
     shopt -s expand_aliases
 }
 
-install_distro_packages() {
+function install_distro_packages() {
     INSTALLER_CMD="sudo -H -E apt install -y -o Dpkg::Options::=--force-confdef -o Dpkg::Options::=--force-confnew"
     PACKAGES=(
         python3-minimal
@@ -35,11 +35,16 @@ install_distro_packages() {
     redirect_cmd ${INSTALLER_CMD} ${PACKAGES[@]}
 }
 
-install_ansible() {
+function install_ansible() {
     log "Create virtual environment for python packages"
     redirect_cmd virtualenv --python python3 ${VENV_PATH}
     redirect_cmd source "${VENV_PATH}/bin/activate"
 
     log "Install ansible"
     redirect_cmd pip install ansible
+}
+
+function start_services() {
+    sudo service screen-cleanup start
+    sudo service docker start
 }

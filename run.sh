@@ -1,7 +1,6 @@
 #!/bin/bash
 
 set -o errexit
-#set -o nounset
 set -o pipefail
 
 XCLUSTER_ANSIBLE_PATH=$(git rev-parse --show-toplevel)
@@ -12,16 +11,9 @@ source "${XCLUSTER_ANSIBLE_PATH}/lib/common.sh"
 source "${XCLUSTER_ANSIBLE_PATH}/lib/opts.sh"
 source "${XCLUSTER_ANSIBLE_PATH}/lib/xcluster.sh"
 
-# setup environment
 parse_cmdline_opts $*
-bootstrap
-install_distro_packages
-install_ansible
-start_services || true
+source_env
 
-# setup network
-add_ns "${XCLUSTER_NETNS}"
-log_elapsed_time
-
-# start test
-exec_ns "${XCLUSTER_NETNS}" "${XCLUSTER_ANSIBLE_PATH}/run.sh $*"
+export PATH="${PATH}:$(ovl_path ${OVL})"
+cd "$(ovl_path ${OVL})"
+redirect_cmd ${OVL}.sh test

@@ -21,3 +21,4 @@ export __kcfg="${XCLUSTER_PATH}/config/$__kver"
 
 # test specific variables
 export XCLUSTER_NETNS="1"
+export OVL="usrsctp"
