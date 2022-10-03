@@ -45,6 +45,6 @@ function install_ansible() {
 }
 
 function start_services() {
-    sudo service screen-cleanup start
-    sudo service docker start
+    redirect_cmd sudo service screen-cleanup start
+    redirect_cmd sudo service docker start
 }

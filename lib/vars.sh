@@ -20,7 +20,7 @@ export __kobj="${XCLUSTER_WORKSPACE}/xcluster/obj-$__kver"
 export __kcfg="${XCLUSTER_PATH}/config/$__kver"
 
 # test specific variables
-export XCLUSTER_NETNS="1"
-export OVL="usrsctp"
+# export XCLUSTER_NETNS="1"
+# export OVL="usrsctp"
 export CALICO_EGRESS_PATH=${HOME}/code/calico-egress
 export XCLUSTER_OVLPATH=${XCLUSTER_PATH}/ovl:${CALICO_EGRESS_PATH}/test/ovl

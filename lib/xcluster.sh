@@ -19,7 +19,7 @@ function __check_ns() {
         __ns_prefix=$1
     fi
     local __netns=${USER}_xcluster$__ns_prefix
-    redirect_cmd ip netns | grep -qe "^$__netns "
+    ip netns | grep -qe "^$__netns "
 }
 
 function add_ns() {
@@ -33,7 +33,7 @@ function add_ns() {
     else
         log "Add netns $__ns_prefix"
         source_env
-        redirect_cmd ${XCLUSTER} nsadd $__ns_prefix || true
+        redirect_cmd ${XCLUSTER} nsadd $__ns_prefix
     fi
 }
 

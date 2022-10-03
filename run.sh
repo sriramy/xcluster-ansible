@@ -17,6 +17,6 @@ source_env
 # start test
 export PATH="${PATH}:$(ovl_path ${OVL})"
 cd "$(ovl_path ${OVL})"
-exec_ns "${XCLUSTER_NETNS}" "${OVL}.sh test ${TESTCASE}"
+${OVL}.sh test ${TESTCASE}
 
 log_elapsed_time
