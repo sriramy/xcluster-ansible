@@ -12,9 +12,9 @@ export XCLUSTER_PATH="${HOME}/xc/xcluster"
 
 # kernel specific variables
 export KERNELDIR="${HOME}/xc/linux"
-export KERNELVER="5.19.9"
+export KERNEL_VER="6.0"
 
-export __kver="linux-${KERNELVER}"
+export __kver="linux-${KERNEL_VER}"
 export __kbin="${XCLUSTER_WORKSPACE}/xcluster/bzImage-$__kver"
 export __kobj="${XCLUSTER_WORKSPACE}/xcluster/obj-$__kver"
 export __kcfg="${XCLUSTER_PATH}/config/$__kver"

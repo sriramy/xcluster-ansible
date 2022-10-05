@@ -19,7 +19,7 @@ function __check_ns() {
         __ns_prefix=$1
     fi
     local __netns=${USER}_xcluster$__ns_prefix
-    ip netns | grep -qe "^$__netns "
+    ip netns | grep -qe "^$__netns"
 }
 
 function add_ns() {
@@ -53,10 +53,12 @@ function rem_ns() {
 }
 
 function exec_ns() {
-    local __netns=${USER}_xcluster$1
-    local __cmd=$2
-    log "Run $__cmd in $__netns"
-    ip netns exec $__netns "$__cmd"
+    local __netns="${USER}_xcluster$1"
+    local __cmd="$2"
+    local __args=""
+    if [ $# -ge 3 ]; then __args="${@:3}"; fi
+    log "Run $__cmd $__args in $__netns"
+    ip netns exec $__netns $__cmd $__args
 }
 
 function ovl_path() {

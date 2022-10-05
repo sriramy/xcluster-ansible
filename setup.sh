@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -o errexit
+# set -o errexit
 #set -o nounset
 set -o pipefail
 
@@ -35,11 +35,11 @@ log_execution_stop
 ###############################################################################
 # Build kernel if needed
 ###############################################################################
-exec_ns "${XCLUSTER_NETNS}" ${XCLUSTER_ANSIBLE_PATH}/kernel.sh $*
+exec_ns "${XCLUSTER_NETNS}" ${XCLUSTER_ANSIBLE_PATH}/kernel.sh $@
 
 ###############################################################################
 # start test if $OVL is given
 ###############################################################################
 if [[ ! -z ${OVL} ]]; then
-    exec_ns "${XCLUSTER_NETNS}" ${XCLUSTER_ANSIBLE_PATH}/run.sh $*
+    exec_ns "${XCLUSTER_NETNS}" ${XCLUSTER_ANSIBLE_PATH}/run.sh $@
 fi

@@ -21,8 +21,8 @@ EOF
 function parse_cmdline_opts() {
     # set variables to the values set in env - otherwise, set them to defaults
     XCLUSTER_CLEAN="${XCLUSTER_CLEAN:-false}"
-    KERNELPATCH="${KERNELPATCH:-}"
-    KERNELVER="${KERNELVER:-'5.19.9'}"
+    KERNEL_PATCH="${KERNEL_PATCH:-}"
+    KERNEL_VER="${KERNEL_VER:-5.19.9}"
     XCLUSTER_NETNS="${XCLUSTER_NETNS:-1}"
     OVL="${OVL:-}"
     TESTCASE="${TESTCASE:-}"
@@ -34,8 +34,8 @@ function parse_cmdline_opts() {
     while getopts ":hcp:k:n:o:t:dv" o; do
         case "${o}" in
         c) XCLUSTER_CLEAN="true" ;;
-        p) KERNELPATCH="${OPTARG}" ;;
-        k) KERNELVER="${OPTARG}" ;;
+        p) KERNEL_PATCH="${OPTARG}" ;;
+        k) KERNEL_VER="${OPTARG}" ;;
         n) XCLUSTER_NETNS="${OPTARG}" ;;
         o) OVL="${OPTARG}" ;;
         t) TESTCASE="${OPTARG}" ;;
@@ -47,8 +47,8 @@ function parse_cmdline_opts() {
     done
     # Do all the exports
     export XCLUSTER_CLEAN="${XCLUSTER_CLEAN}"
-    export KERNELPATCH="${KERNELPATCH}"
-    export KERNELVER="${KERNELVER}"
+    export KERNEL_PATCH="${KERNEL_PATCH}"
+    export KERNEL_VER="${KERNEL_VER}"
     export XCLUSTER_NETNS="${XCLUSTER_NETNS}"
     export OVL="${OVL}"
     export TESTCASE="${TESTCASE}"
@@ -76,7 +76,9 @@ function log_execution_start() {
     echo "#---------------------------------------------------#"
     echo "Date & Time      : $(date -u '+%F %T UTC')"
     echo "Clean slate      : ${XCLUSTER_CLEAN}"
-    echo "Kernel version   : ${KERNELVER}"
+    test -n "${KERNEL_PATCH}" &&
+    echo "Kernel patch:  ${KERNEL_PATCH}"
+    echo "Kernel version   : ${KERNEL_VER}"
     echo "OVL              : ${OVL}"
     echo "Testcase         : ${TESTCASE}"
     echo "K8s environment  : ${K8S}"
